@@ -1,0 +1,78 @@
+@import 'https://unpkg.com/open-props' layer(design.system);
+@import 'https://unpkg.com/open-props/normalize.light.min.css' layer(demo.support);
+
+.card {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: slide-fade-in both;
+      animation-timeline: view();
+      animation-range: contain 0% contain 50%;
+    }
+  }
+}
+
+@keyframes slide-fade-in {
+  from {
+    opacity: 0;
+    box-shadow: none;
+    transform: scale(0.8) translateY(15vh);
+  }
+}
+
+@layer demo.support {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    block-size: 100%;
+    background: var(--surface-3);
+  }
+
+  body {
+    min-block-size: 100%;
+    font-family: system-ui, sans-serif;
+
+    display: grid;
+    place-content: center;
+    padding-block: 30dvh;
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--size-3);
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(3, var(--size-content-1));
+
+    & > .card {
+      background: linear-gradient(#fff, #fff), var(--gradient-10);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      border-radius: var(--radius-3);
+      box-shadow: var(--shadow-3);
+      line-height: 3;
+      padding-top: var(--size-1);
+      font-size: var(--font-size-4);
+      font-weight: var(--font-weight-6);
+      font-family: var(--font-mono);
+      display: grid;
+      place-content: center;
+
+      &:nth-of-type(4n) {
+        grid-row: span 2;
+        background-image: linear-gradient(#fff, #fff), var(--gradient-3);
+      }
+
+      &:nth-of-type(7n) {
+        grid-row: span 3;
+        background-image: linear-gradient(#fff, #fff), var(--gradient-5);
+      }
+
+      &:nth-of-type(5n) {
+        grid-column: span 2;
+        background-image: linear-gradient(#fff, #fff), var(--gradient-18);
+      }
+    }
+  }
+}

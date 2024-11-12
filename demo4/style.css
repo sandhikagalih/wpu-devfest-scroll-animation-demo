@@ -1,0 +1,141 @@
+@import 'https://open-props/shadows.min.css' layer(design.system);
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100cqi) scale(0.75);
+  }
+}
+
+.scroll-stack {
+  container-type: inline-size;
+  inline-size: 100cqi;
+
+  display: grid;
+  grid-auto-flow: column;
+
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+
+  gap: 1rem;
+  padding-inline: 1rem;
+  scroll-padding-inline: 1rem;
+  padding-block: 30px 60px;
+
+  /* the before and afters have unsnappable elements that create bouncy edges to the scroll */
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+  }
+
+  &::before {
+    order: 0;
+    inline-size: 25cqi;
+  }
+
+  &::after {
+    order: 11;
+    inline-size: 80cqi;
+  }
+
+  /* 
+    snap on the item, which is untransformed
+    also order is changed so last item is on top
+  */
+  .item {
+    scroll-snap-align: start;
+
+    &:nth-child(1) {
+      order: 10;
+      z-index: 1;
+    }
+    &:nth-child(2) {
+      order: 9;
+      z-index: 2;
+    }
+    &:nth-child(3) {
+      order: 8;
+      z-index: 3;
+    }
+    &:nth-child(4) {
+      order: 7;
+      z-index: 4;
+    }
+    &:nth-child(5) {
+      order: 6;
+      z-index: 5;
+    }
+    &:nth-child(6) {
+      order: 5;
+      z-index: 6;
+    }
+    &:nth-child(7) {
+      order: 4;
+      z-index: 7;
+    }
+    &:nth-child(8) {
+      order: 3;
+      z-index: 8;
+    }
+    &:nth-child(9) {
+      order: 2;
+      z-index: 9;
+    }
+  }
+
+  /* 
+    magic is here, a child of the snapped item 
+    animates items as they cross the viewport view()
+    range is set to create the effect
+  */
+  figure {
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: slide-in linear both;
+        animation-timeline: view(x);
+        animation-range: cover -75cqi contain 20cqi;
+      }
+    }
+
+    flex-shrink: 0;
+    block-size: 80cqb;
+    aspect-ratio: 9/16;
+    background: light-dark(#ccc, #444);
+    box-shadow: var(--shadow-5);
+    border-radius: 20px;
+    overflow: clip;
+
+    display: flex;
+
+    @container (width < 480px) {
+      block-size: 50cqb;
+    }
+
+    > img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+@layer support {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    block-size: 100%;
+    color-scheme: dark light;
+  }
+
+  body {
+    min-block-size: 100%;
+    font-family: system-ui, sans-serif;
+
+    display: grid;
+    place-items: center;
+  }
+}

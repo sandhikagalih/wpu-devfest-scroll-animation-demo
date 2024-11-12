@@ -1,0 +1,48 @@
+body {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  place-content: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+
+  background: oklch(30% 75% var(--hue));
+}
+
+@property --hue {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes hue-cycle {
+  to {
+    --hue: 360deg;
+  }
+}
+
+body {
+  animation: hue-cycle 1s linear both;
+  animation-timeline: scroll();
+}
+
+h1,
+h2,
+h3 {
+  color: white;
+  max-width: 40ch;
+}
+
+p {
+  color: white;
+  max-width: 50ch;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+a {
+  color: white;
+}
