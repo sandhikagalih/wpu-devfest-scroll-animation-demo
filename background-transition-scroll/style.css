@@ -25,7 +25,7 @@ body {
 }
 
 body {
-  animation: hue-cycle 1s linear both;
+  animation: hue-cycle linear;
   animation-timeline: scroll();
 }
 

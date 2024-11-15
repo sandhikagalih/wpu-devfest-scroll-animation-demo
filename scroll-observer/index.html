@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Observer Demo</title>
+  <style>
+    main {
+      display: flex;
+      justify-content: center;
+    }
+
+    .contents {
+      position: absolute;
+      width: 700px;
+      height: 1725px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .wrapper {
+      position: relative;
+      top: 600px;
+    }
+
+    .sampleBox {
+      position: relative;
+      width: 150px;
+      background-color: rgb(245 170 140);
+      border: 2px solid rgb(201 126 17);
+      padding: 4px;
+      margin-bottom: 6px;
+    }
+
+    #box1 {
+      height: 200px;
+    }
+
+    #box2 {
+      height: 75px;
+    }
+
+    #box3 {
+      height: 150px;
+    }
+
+    #box4 {
+      height: 100px;
+    }
+
+    .label {
+      font:
+        14px "Open Sans",
+        "Arial",
+        sans-serif;
+      position: absolute;
+      margin: 0;
+      background-color: rgb(255 255 255 / 70%);
+      border: 1px solid rgb(0 0 0 / 70%);
+      width: 3em;
+      height: 18px;
+      padding: 2px;
+      text-align: center;
+    }
+
+    .topLeft {
+      left: 2px;
+      top: 2px;
+    }
+
+    .topRight {
+      right: 2px;
+      top: 2px;
+    }
+
+    .bottomLeft {
+      bottom: 2px;
+      left: 2px;
+    }
+
+    .bottomRight {
+      bottom: 2px;
+      right: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <template id="boxTemplate">
+    <div class="sampleBox">
+      <div class="label topLeft"></div>
+      <div class="label topRight"></div>
+      <div class="label bottomLeft"></div>
+      <div class="label bottomRight"></div>
+    </div>
+  </template>
+
+  <main>
+    <div class="contents">
+      <div class="wrapper"></div>
+    </div>
+  </main>
+
+  <script>
+    let observers = [];
+
+    startup = () => {
+      let wrapper = document.querySelector(".wrapper");
+
+      // Options for the observers
+
+      let observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [],
+      };
+
+      // An array of threshold sets for each of the boxes. The
+      // first box's thresholds are set programmatically
+      // since there will be so many of them (for each percentage
+      // point).
+
+      let thresholdSets = [
+        [],
+        [0.5],
+        [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        [0, 0.25, 0.5, 0.75, 1.0],
+      ];
+
+      for (let i = 0; i <= 1.0; i += 0.01) {
+        thresholdSets[0].push(i);
+      }
+
+      // Add each box, creating a new observer for each
+
+      for (let i = 0; i < 4; i++) {
+        let template = document
+          .querySelector("#boxTemplate")
+          .content.cloneNode(true);
+        let boxID = `box${i + 1}`;
+        template.querySelector(".sampleBox").id = boxID;
+        wrapper.appendChild(document.importNode(template, true));
+
+        // Set up the observer for this box
+
+        observerOptions.threshold = thresholdSets[i];
+        observers[i] = new IntersectionObserver(
+          intersectionCallback,
+          observerOptions,
+        );
+        observers[i].observe(document.querySelector(`#${boxID}`));
+      }
+
+      // Scroll to the starting position
+
+      document.scrollingElement.scrollTop =
+        wrapper.firstElementChild.getBoundingClientRect().top + window.scrollY;
+      document.scrollingElement.scrollLeft = 750;
+    };
+
+    intersectionCallback = (entries) => {
+      entries.forEach((entry) => {
+        const box = entry.target;
+        const visiblePct = `${Math.floor(entry.intersectionRatio * 100)}%`;
+
+        box.querySelector(".topLeft").textContent = visiblePct;
+        box.querySelector(".topRight").textContent = visiblePct;
+        box.querySelector(".bottomLeft").textContent = visiblePct;
+        box.querySelector(".bottomRight").textContent = visiblePct;
+      });
+    };
+
+    startup();
+
+  </script>
+</body>
+
+</html>

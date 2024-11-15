@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll Animation | Simple Image Fade Scroll</title>
+  <style>
+    @keyframes appear {
+      from {
+        opacity: 0;
+        scale: 0.8;
+      }
+
+      to {
+        opacity: 1;
+        scale: 1;
+      }
+    }
+
+    img {
+      /* animation: 2s appear linear infinite alternate; */
+      animation: appear linear infinite alternate;
+      /* animation-timeline: view(); */
+      /* animation-range: entry 0 cover 25%; */
+    }
+
+
+    /* Setup */
+
+    img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 1rem;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    li:nth-child(even) {
+      margin-top: 8rem;
+    }
+
+    li:nth-child(odd):not(:first-child) {
+      margin-top: -4rem;
+    }
+
+    ul {
+      padding: 0;
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 0 1rem;
+      justify-content: center;
+    }
+
+    /* kasih background kalo image ga muncul */
+
+    img {
+      background-color: lightblue;
+    }
+
+    img:nth-child(2) {
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li><img src="img/1.jpg" alt="image 1"></li>
+    <li><img src="img/2.jpg" alt="image 2"></li>
+    <li><img src="img/3.jpg" alt="image 3"></li>
+    <li><img src="img/4.jpg" alt="image 4"></li>
+    <li><img src="img/5.jpg" alt="image 5"></li>
+    <li><img src="img/6.jpg" alt="image 6"></li>
+    <li><img src="img/7.jpg" alt="image 7"></li>
+    <li><img src="img/8.jpg" alt="image 8"></li>
+    <li><img src="img/9.jpg" alt="image 9"></li>
+    <li><img src="img/10.jpg" alt="image 10"></li>
+    <li><img src="img/11.jpg" alt="image 11"></li>
+    <li><img src="img/12.jpg" alt="image 12"></li>
+    <li><img src="img/13.jpg" alt="image 13"></li>
+    <li><img src="img/14.jpg" alt="image 14"></li>
+    <li><img src="img/15.jpg" alt="image 15"></li>
+    <li><img src="img/16.jpg" alt="image 16"></li>
+    <li><img src="img/17.jpg" alt="image 17"></li>
+    <li><img src="img/18.jpg" alt="image 18"></li>
+    <li><img src="img/19.jpg" alt="image 19"></li>
+    <li><img src="img/20.jpg" alt="image 20"></li>
+    <li><img src="img/21.jpg" alt="image 21"></li>
+    <li><img src="img/22.jpg" alt="image 22"></li>
+    <li><img src="img/23.jpg" alt="image 23"></li>
+    <li><img src="img/24.jpg" alt="image 24"></li>
+    <li><img src="img/25.jpg" alt="image 25"></li>
+    <li><img src="img/26.jpg" alt="image 26"></li>
+  </ul>
+</body>
+
+</html>
