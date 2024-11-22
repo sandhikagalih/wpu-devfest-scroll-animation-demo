@@ -17,9 +17,9 @@
 }
 
 .stuck-grid {
-  block-size: 100svh;
+  /* block-size: 100svh;
   perspective: 1000px;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d; */
 
   display: grid;
   grid: repeat(4, 25dvh) / repeat(4, 25dvw);
@@ -38,13 +38,13 @@
 
     text-wrap: nowrap;
 
-    @supports (animation-timeline: scroll()) {
+    /* @supports (animation-timeline: scroll()) {
       @media (prefers-reduced-motion: no-preference) {
         animation: zoom-in linear both;
         animation-timeline: scroll(root block);
         will-change: transform, opacity, filter;
       }
-    }
+    } */
 
     &.special.special {
       grid-row: 2 / span 2;
