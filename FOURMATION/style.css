@@ -1,0 +1,91 @@
+/* general styles */
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 150%;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+/* Three column layout */
+.columns {
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  width: 100%;
+  max-width: 80em;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Inside one column, lay out all items in column direction */
+.column {
+  --column-offset: 10vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--column-offset) 0;
+}
+
+/* Limit site of the images */
+.column__item-imgwrap img {
+  border-radius: 1em;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.75;
+  object-fit: cover;
+}
+
+.column__item-caption {
+  text-align: center;
+}
+
+/* Adjust position of warning */
+.warning {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  max-width: 80em;
+  margin: auto;
+  z-index: 2;
+}
+
+@supports (animation-timeline: scroll()) {
+  /* As we're about to shift content out of .columns, we need it to hide its overflow */
+  .columns {
+    overflow-y: hidden;
+  }
+
+  .column-reverse {
+    /* Flip item order in reverse columns */
+    flex-direction: column-reverse;
+  }
+
+  /* Set up Animation */
+  @keyframes adjust-position {
+    /* Start position: shift entire column up, but not so that it goes out of view */
+    from {
+      transform: translateY(calc(-100% + 100vh));
+    }
+
+    /* End position: shift entire column down, but not so that it goes out of view */
+    to {
+      transform: translateY(calc(100% - 100vh));
+    }
+  }
+
+  /* Hook our animation with the timeline to our columns */
+  .column-reverse {
+    animation: adjust-position linear forwards;
+    animation-timeline: scroll(root block);
+  }
+}
+
