@@ -1,0 +1,241 @@
+@layer support, demo;
+
+@import 'https://unpkg.com/open-props' layer(support.design-system);
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: perspective(1e3px) rotateY(90deg) rotateX(-5deg) rotate(10deg);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+    transform: perspective(1e3px) rotateY(-30deg) rotateX(5deg) rotate(-1deg);
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: perspective(1e3px) rotateY(-90deg) rotateX(10deg) rotate(10deg);
+  }
+}
+
+@layer demo {
+  main>section {
+    &:nth-of-type(1) {
+      view-timeline: --section-1 y;
+    }
+
+    &:nth-of-type(2) {
+      view-timeline: --section-2 y;
+    }
+
+    &:nth-of-type(3) {
+      view-timeline: --section-3 y;
+    }
+
+    &:nth-of-type(4) {
+      view-timeline: --section-4 y;
+    }
+
+    &:nth-of-type(5) {
+      view-timeline: --section-5 y;
+    }
+  }
+
+  body {
+    timeline-scope: --section-1, --section-2, --section-3, --section-4, --section-5;
+  }
+
+  .face {
+    animation: fade ease both;
+    animation-range: contain;
+  }
+
+  .face-1 {
+    animation-name: fade;
+    animation-timeline: --section-1;
+  }
+
+  .face-2 {
+    animation-name: fade;
+    animation-timeline: --section-2;
+  }
+
+  .face-3 {
+    animation-name: fade;
+    animation-timeline: --section-3;
+  }
+
+  .face-4 {
+    animation-name: fade;
+    animation-timeline: --section-4;
+  }
+
+  .face-5 {
+    animation-name: fade;
+    animation-timeline: --section-5;
+  }
+}
+
+@layer support.demo {
+  :root {
+    --main-column: 1024px;
+  }
+
+  .page-b * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    block-size: 100%;
+    background-image: url('Photo/bg1.jpg');
+  }
+
+  body {
+    min-block-size: 100%;
+    font-family: system-ui, sans-serif;
+  }
+
+  header {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    inset: 0 0 auto 0;
+    background: white;
+    box-shadow: var(--shadow-1);
+    block-size: var(--size-9);
+    padding-inline: var(--size-7);
+
+    >* {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mock-logo {
+      inline-size: var(--size-content-1);
+      block-size: var(--size-5);
+      background: var(--gray-5);
+      border-radius: var(--radius-2);
+    }
+
+    nav {
+      display: flex;
+      gap: var(--size-2);
+
+      >a {
+        color: CanvasText;
+        text-decoration: none;
+        display: inline-flex;
+        place-items: center;
+        padding-inline: var(--size-4);
+        padding-block: var(--size-2);
+
+        &.cta {
+          background: oklab(70% 0.3 0);
+          border-radius: var(--radius-round);
+          color: white;
+        }
+      }
+    }
+  }
+
+  main {
+    display: grid;
+    grid-auto-rows: 100svh;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--size-7);
+    place-items: center start;
+
+    @media (width <=1080px) {
+      padding-inline: var(--size-7);
+    }
+
+    >section {
+      grid-column: 1 / 2;
+
+      &:nth-of-type(1) {
+        grid-row: 1;
+      }
+    }
+  }
+
+  .site-main {
+    position: relative;
+    max-inline-size: var(--main-column);
+    margin-inline: auto;
+  }
+
+  .hero-text {
+    text-wrap: balance;
+    max-inline-size: var(--size-header-1);
+    font-size: var(--font-size-7);
+    margin-inline: 0 auto;
+
+    >div {
+      display: inline;
+    }
+  }
+
+  .gradient-text-1 {
+    background: linear-gradient(to top right in oklab, oklch(55% 0.45 350), oklch(95% 0.4 95)) fixed;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-2 {
+    background: linear-gradient(to top right in oklch, oklch(75% 0.5 156), oklch(70% 0.5 261)) fixed;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-3 {
+    background: linear-gradient(to bottom in oklch, oklch(75% 0.5 156), oklch(70% 0.5 261)) fixed;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-4 {
+    background: linear-gradient(to top in oklab, oklch(60% 0.5 353) 0%, oklch(80% 0.5 271) 100%) fixed;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-5 {
+    background: linear-gradient(to bottom right in lch, color(display-p3 25% 25% 100%) 0%, color(display-p3 100% 85% 30%) 100%) fixed;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .rotating-viewport {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    position: sticky;
+    top: 10svh;
+    right: 0;
+    height: 80svh;
+    aspect-ratio: var(--ratio-portrait);
+
+    & .face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+      display: grid;
+      align-items: center;
+
+      >img {
+        inline-size: 100%;
+      }
+    }
+  }
+}
